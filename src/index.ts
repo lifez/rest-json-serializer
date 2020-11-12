@@ -1,6 +1,4 @@
-interface FnField {
-  (instance?: any): { key: string; value: any };
-}
+type FnField = (instance?: any) => { key: string; value: any };
 
 export class BaseSerializer {
   protected instance: any;
