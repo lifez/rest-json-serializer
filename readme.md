@@ -10,3 +10,65 @@ This project influenced [Django REST framework Serializer](https://www.django-re
 To install this package, run the following command from the root of your project's directory:
 
 `npm i rest-json-serializer`
+
+
+## Example Usage
+```
+class UserSerializer extends BaseSerializer {
+  protected instance: User;
+  protected defaultValue = { imageUrl: "https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png" };
+}
+
+
+const instance: User ={
+    id: 1,
+    firstName: "Carlo",
+    lastName: "Bayer",
+    email: "a@a.com",
+    password: "12345678",
+    verifyEmail: true,
+    emailToken: "this-is-email-token",
+    imageUrl: null,
+}
+
+
+const serializer = new UserSerializer({
+  instance,
+  exclude: ["id", "password", "emailToken"],
+});
+
+console.log(serializer.serialize());
+//=> {
+//  "firstName" : "Carlo",
+//  "lastName": "Bayer",
+//  "email": "a@a.com"
+//  "imageUrl": "https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png"
+// }
+const returnNameFunction = (instance: any) => {
+  return {
+    key: "name",
+    value: `${instance["firstName"]} ${instance["lastName"]}`,
+  };
+};
+const anotherSerializer = new UserSerializer({
+  instance,
+  exclude: [
+    "id",
+    "password",
+    "emailToken",
+    "email",
+    "firstName",
+    "lastName",
+    "verifyEmail",
+  ],
+  renameFields: [{ from: "imageUrl", to: "image" }],
+  methodFields: [returnNameFunction],
+});
+
+console.log(anotherSerializer.serialize());
+//=> {
+//  "name" : "Carlo Bayer",
+//  "image": "https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png"
+// }
+
+```
