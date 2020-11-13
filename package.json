@@ -23,6 +23,11 @@
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.0.5"
   },
+  "homepage": "https://github.com/lifez/rest-json-serializer",
+  "repository": {
+    "type" : "git",
+    "url" : "git@github.com:lifez/rest-json-serializer.git"
+  },
   "author": "Phawin Khongkhasawan",
   "keywords": ["serializer", "rest", "crud"]
 }
