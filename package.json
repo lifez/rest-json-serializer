@@ -1,6 +1,6 @@
 {
   "name": "rest-json-serializer",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -8,10 +8,11 @@
     "build": "tsc",
     "lint": "tslint -p tsconfig.json",
     "test": "jest --config jestconfig.json",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint",
-    "version" : "npm run format && git add -A src",
-    "postversion" : "git push && git push --tags"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "license": "ISC",
   "devDependencies": {
@@ -25,9 +26,13 @@
   },
   "homepage": "https://github.com/lifez/rest-json-serializer",
   "repository": {
-    "type" : "git",
-    "url" : "git@github.com:lifez/rest-json-serializer.git"
+    "type": "git",
+    "url": "git@github.com:lifez/rest-json-serializer.git"
   },
   "author": "Phawin Khongkhasawan",
-  "keywords": ["serializer", "rest", "crud"]
+  "keywords": [
+    "serializer",
+    "rest",
+    "crud"
+  ]
 }
