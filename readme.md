@@ -11,6 +11,10 @@ To install this package, run the following command from the root of your project
 
 `npm i rest-json-serializer`
 
+## Change Log
+### 1.2.0
+- Add `resolveMethodFields` to receive list function that return `Promise`
+
 
 ## Example Usage
 import { BaseSerializer } from 'rest-json-serializer'
