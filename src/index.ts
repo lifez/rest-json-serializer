@@ -1,4 +1,6 @@
-type FnField = (instance?: any) => { key: string; value: any };
+export type BaseSerializerFnReturnType = { key: string; value: any };
+type FnField = (instance?: any) => BaseSerializerFnReturnType;
+type PromiseFnField = (instance?: any) => Promise<BaseSerializerFnReturnType>;
 
 export class BaseSerializer {
   protected instance: any;
@@ -6,27 +8,32 @@ export class BaseSerializer {
   protected defaultValue: Record<string, any>;
   protected renameFields: { from: string; to: string }[];
   protected methodFields: FnField[];
+  protected resolveMethodFields: PromiseFnField[];
+
   constructor({
     instance,
     exclude = [],
     defaultValue = {},
     renameFields = [],
     methodFields = [] as FnField[],
+    resolveMethodFields = [] as PromiseFnField[],
   }: {
     instance: any;
     exclude?: string[];
     defaultValue?: Record<string, any>;
     renameFields?: { from: string; to: string }[];
     methodFields?: FnField[];
+    resolveMethodFields?: PromiseFnField[];
   }) {
     this.instance = instance;
     this.exclude = exclude;
     this.defaultValue = defaultValue;
     this.renameFields = renameFields;
     this.methodFields = methodFields;
+    this.resolveMethodFields = resolveMethodFields;
   }
 
-  serialize(): Record<string, any> {
+  async serialize(): Promise<Record<string, any>> {
     const data: Record<string, any> = {};
     Object.keys(this.instance).forEach((key) => {
       if (!this.exclude.includes(key)) {
@@ -43,6 +50,11 @@ export class BaseSerializer {
       const result = method(this.instance);
       data[result.key] = result.value;
     });
+
+    for (const method of this.resolveMethodFields) {
+      const result = await method(this.instance);
+      data[result.key] = result.value;
+    }
 
     return this.renameFields.length ? this.doRename(data) : data;
   }
