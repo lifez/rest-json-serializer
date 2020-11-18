@@ -13,6 +13,7 @@ To install this package, run the following command from the root of your project
 
 
 ## Example Usage
+import { BaseSerializer } from 'rest-json-serializer'
 ```
 class UserSerializer extends BaseSerializer {
   protected instance: User;
